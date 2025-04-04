@@ -573,8 +573,8 @@
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" id="githubLink"><i class="fab fa-github"></i></a>
+                        <a href="#" id="linkedinLink"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
@@ -700,16 +700,12 @@
         
         // Initialize a  single Tableau Visualizations
         function initTableauViz(container) {
-            // Get the container ID to determine which visualization to load
             const containerId = container.id;
-
-            // Define visualization URLs - replace with your actual Tableau Public URLs
             const tableauUrls = {
                 'tableauViz1': 'https://public.tableau.com/views/TableauDay2-3_16353302451610/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link',
                 'tableauViz2': 'https://public.tableau.com/views/CovidRecentDataDashboard/CovidRecentDataDashboard?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link'
             };
-
-            // Initialize visualization options
+        
             const vizOptions = {
                 hideTabs: true,
                 hideToolbar: true,
@@ -721,12 +717,8 @@
             };
             
             try {
-                // Check if Tableau API is available and if we have a URL for this container
                 if (typeof tableau !== 'undefined' && tableauUrls[containerId]) {
-                    // Clear the placeholder
                     container.innerHTML = '';
-                    
-                    // Create the visualization
                     new tableau.Viz(container, tableauUrls[containerId], vizOptions);
                 } else {
                     if (typeof tableau === 'undefined') {
@@ -740,37 +732,26 @@
                 showDashboardError(container, `Error loading visualization: ${error.message}`);
             }
         }
-
-
+        
         // Initialize a single Power BI visualization
         function initPowerBIViz(container) {
-            // Get the container ID to determine which visualization to load
             const containerId = container.id;
-            
-            // Define visualization URLs or embed codes - replace with your actual Power BI URLs
             const powerbiUrls = {
                 'powerbi1': 'https://app.powerbi.com/view?r=eyJrIjoiZGFjMTNhNzgtNzllYS00MjZhLThjYmEtMThlMGFhOTliMWQ3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9',
                 'powerbi2': 'https://app.powerbi.com/view?r=eyJrIjoiODMyMTU0MTUtOGJmOC00M2Q2LTgyZTMtZTQ3YTAzOGYwNGY3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9',
                 'powerbi3': 'https://app.powerbi.com/view?r=eyJrIjoiZTA1MDkzMzEtYTA3NS00NjE0LWE5NDMtZmRmMjA4NWZhOTRmIiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9'
             };
-    
+        
             try {
-                // Check if we have a URL for this container
                 if (powerbiUrls[containerId]) {
-                    // Clear the placeholder
                     container.innerHTML = '';
-                    
-                    // Create iframe to embed Power BI report
                     const iframe = document.createElement('iframe');
                     iframe.src = powerbiUrls[containerId];
                     iframe.width = '100%';
                     iframe.height = '100%';
                     iframe.style.border = 'none';
                     iframe.allowFullscreen = true;
-                    
-                    // Append iframe to container
                     container.appendChild(iframe);
-                    
                     console.log(`Power BI visualization ${containerId} loaded successfully`);
                 } else {
                     showDashboardError(container, "Visualization URL not configured for this container.");
@@ -823,7 +804,7 @@
             
             // Set values in modal inputs
             document.getElementById('githubInput').value = githubLink !== '#' ? githubLink : '';
-            document.getElementById('linkedinInput').value = linkedinLink !== '#' ? linkedinLink : ''
+            document.getElementById('linkedinInput').value = linkedinLink !== '#' ? linkedinLink : '';
         }
         
         // Save social media links to localStorage
@@ -861,6 +842,9 @@
                 document.body.removeChild(toast);
             }, 3000);
         }
+
+        // Initialize social links
+        loadSocialLinks();
         
         // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
