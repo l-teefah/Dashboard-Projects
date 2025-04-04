@@ -358,6 +358,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#socialLinksModal">
+                            <i class="fas fa-cog"></i> Social Links
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -368,7 +373,7 @@
         <div class="container">
             <h1 class="display-4">Data Visualization Reports Portfolio</h1>
             <p class="lead">Showing interactive dashboards created with Tableau Public and Power BI</p>
-            <a href="#portfolio" class="btn btn-light btn-lg">View My Work</a>
+            <a href="#portfolio" class="btn btn-light btn-lg">View My Works</a>
         </div>
     </section>
 
@@ -382,10 +387,10 @@
                 <button class="btn btn-outline-dark filter-button active" data-filter="all">All</button>
                 <button class="btn btn-outline-dark filter-button" data-filter=".tableau">Tableau</button>
                 <button class="btn btn-outline-dark filter-button" data-filter=".powerbi">Power BI</button>
-                <button class="btn btn-outline-dark filter-button" data-filter=".sales & marketing">Sales & Marketing</button>
-                <button class="btn btn-outline-dark filter-button" data-filter=".service operations">Service Operations</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".sales-marketing">Sales & Marketing</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".service-operations">Service Operations</button>
                 <button class="btn btn-outline-dark filter-button" data-filter=".health">Health</button>
-                <button class="btn btn-outline-dark filter-button" data-filter=".research & analytics">Research & Analytics</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".research-analytics">Research & Analytics</button>
             </div>
             
             <!-- Portfolio Items -->
@@ -541,7 +546,7 @@
             <h2 class="text-center mb-4">Get In Touch</h2>
             <div class="row">
                 <div class="col-lg-6 mx-auto">
-                    <form>
+                    <form id="contactForm">
                         <div class="mb-3">
                             <input type="text" class="form-control" placeholder="Your Name">
                         </div>
@@ -552,6 +557,7 @@
                             <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
                         </div>
                         <button type="submit" class="btn btn-dark w-100">Send Message</button>
+                        <div id="formStatus"></div>
                     </form>
                 </div>
             </div>
@@ -578,6 +584,34 @@
             </div>
         </div>
     </footer>
+
+    <!-- Social Links Modal -->
+    <div class="modal fade" id="socialLinksModal" tabindex="-1" aria-labelledby="socialLinksModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="socialLinksModalLabel">Edit Social Media Links</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="socialLinksForm">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fab fa-github"></i></span>
+                            <input type="url" class="form-control" id="githubInput" placeholder="https://github.com/l-teefah">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fab fa-linkedin"></i></span>
+                            <input type="url" class="form-control" id="linkedinInput" placeholder="https://www.linkedin.com/in/lateefahyusuf/">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveSocialLinks">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -609,129 +643,268 @@
                 this.classList.add('active');
             });
         });
-        
-        // Initialize Tableau Visualizations
-        function initTableau() {
-            // Replace these URLs with your actual Tableau Public visualization URLs
-            const viz1Url = 'https://public.tableau.com/views/TableauDay2-3_16353302451610/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link';
-            const viz2Url = 'https://public.tableau.com/views/CovidRecentDataDashboard/CovidRecentDataDashboard?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link';
-            
-            const viz1Options = {
-                hideTabs: true,
-                hideToolbar: true,
-                width: '100%',
-                height: '100%'
+
+        // Initialize Tableau and Power BI dashboards when they're scrolled into view
+            // to improve page load performance
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
             };
             
-            const viz2Options = {
+            const dashboardObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const container = entry.target;
+                        if (container.classList.contains('tableau-dashboard')) {
+                            initTableauViz(container);
+                        } else if (container.classList.contains('powerbi-dashboard')) {
+                            initPowerBIViz(container);
+                        }
+                        // Unobserve after loading to prevent reloading
+                        observer.unobserve(container);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all dashboard containers
+            document.querySelectorAll('.dashboard-container').forEach(container => {
+                dashboardObserver.observe(container);
+            });
+            
+            // Initialize social links
+            loadSocialLinks();
+            
+            // Handle contact form submission
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formStatus = document.getElementById('formStatus');
+                formStatus.innerHTML = `
+                    <div class="alert alert-success" role="alert">
+                        Thanks for your message! I'll get back to you soon.
+                    </div>
+                `;
+                this.reset();
+                setTimeout(() => {
+                    formStatus.innerHTML = '';
+                }, 5000);
+            });
+            
+            // Handle social links form submission
+            document.getElementById('saveSocialLinks').addEventListener('click', function() {
+                saveSocialLinks();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('socialLinksModal'));
+                modal.hide();
+            });
+        });
+        
+        // Initialize a  single Tableau Visualizations
+        function initTableauViz(container) {
+            // Get the container ID to determine which visualization to load
+            const containerId = container.id;
+
+            // Define visualization URLs - replace with your actual Tableau Public URLs
+            const tableauUrls = {
+                'tableauViz1': 'https://public.tableau.com/views/TableauDay2-3_16353302451610/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link',
+                'tableauViz2': 'https://public.tableau.com/views/CovidRecentDataDashboard/CovidRecentDataDashboard?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link'
+            };
+
+            // Initialize visualization options
+            const vizOptions = {
                 hideTabs: true,
                 hideToolbar: true,
                 width: '100%',
                 height: '100%',
                 onFirstInteractive: function() {
-                    console.log("Tableau visualization loaded successfully");
+                    console.log(`Tableau visualization ${containerId} loaded successfully`);
                 }
             };
             
             try {
-                // Check if Tableau API is available
-                if (typeof tableau !== 'undefined') {
-                    // Initialize visualizations
-                    const containers = document.querySelectorAll('.tableau-dashboard');
+                // Check if Tableau API is available and if we have a URL for this container
+                if (typeof tableau !== 'undefined' && tableauUrls[containerId]) {
+                    // Clear the placeholder
+                    container.innerHTML = '';
                     
-                    containers.forEach((container, index) => {
-                        try {
-                            // Use the appropriate URL based on the container ID
-                            const vizUrl = container.id === 'tableauViz1' ? viz1Url : viz2Url;
-                            const vizOptions = container.id === 'tableauViz1' ? viz1Options : viz2Options;
-                            new tableau.Viz(container, vizUrl, vizOptions);
-                        } catch (err) {
-                            console.error(`Error initializing visualization ${index + 1}:`, err);
-                            showDashboardError(container, "Could not load Tableau visualization. Please check the URL.");
-                        }
-                    });
+                    // Create the visualization
+                    new tableau.Viz(container, tableauUrls[containerId], vizOptions);
                 } else {
-                    console.error('Tableau API not loaded');
-                    document.querySelectorAll('.tableau-dashboard').forEach(container => {
+                    if (typeof tableau === 'undefined') {
                         showDashboardError(container, "Tableau API not loaded. Please check your internet connection.");
-                    });
+                    } else {
+                        showDashboardError(container, "Visualization URL not configured for this container.");
+                    }
                 }
-            } catch (e) {
-                console.error('Error in Tableau initialization:', e);
+            } catch (error) {
+                console.error(`Error initializing Tableau visualization ${containerId}:`, error);
+                showDashboardError(container, `Error loading visualization: ${error.message}`);
             }
         }
-        
-        // Initialize Power BI Dashboards
-        function initPowerBI() {
-            // Add Power BI embed code here
-            const powerbiContainers = document.querySelectorAll('.powerbi-dashboard');
+
+
+        // Initialize a single Power BI visualization
+        function initPowerBIViz(container) {
+            // Get the container ID to determine which visualization to load
+            const containerId = container.id;
             
-            powerbiContainers.forEach((container, index) => {
-                // These are placeholders - replace with your actual Power BI embed codes
-                let embedUrl;
-        
-                if (container.id === 'powerbi1') {
-                    embedUrl = "https://app.powerbi.com/view?r=eyJrIjoiZGFjMTNhNzgtNzllYS00MjZhLThjYmEtMThlMGFhOTliMWQ3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9";
-                } else if (container.id === 'powerbi2') {
-                    embedUrl = "https://app.powerbi.com/view?r=eyJrIjoiODMyMTU0MTUtOGJmOC00M2Q2LTgyZTMtZTQ3YTAzOGYwNGY3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9";
-                } else if (container.id === 'powerbi3') {
-                    embedUrl = "https://app.powerbi.com/view?r=eyJrIjoiZTA1MDkzMzEtYTA3NS00NjE0LWE5NDMtZmRmMjA4NWZhOTRmIiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9";
+            // Define visualization URLs or embed codes - replace with your actual Power BI URLs
+            const powerbiUrls = {
+                'powerbi1': 'https://app.powerbi.com/view?r=eyJrIjoiZGFjMTNhNzgtNzllYS00MjZhLThjYmEtMThlMGFhOTliMWQ3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9',
+                'powerbi2': 'https://app.powerbi.com/view?r=eyJrIjoiODMyMTU0MTUtOGJmOC00M2Q2LTgyZTMtZTQ3YTAzOGYwNGY3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9',
+                'powerbi3': 'https://app.powerbi.com/view?r=eyJrIjoiZTA1MDkzMzEtYTA3NS00NjE0LWE5NDMtZmRmMjA4NWZhOTRmIiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9'
+            };
+    
+            try {
+                // Check if we have a URL for this container
+                if (powerbiUrls[containerId]) {
+                    // Clear the placeholder
+                    container.innerHTML = '';
+                    
+                    // Create iframe to embed Power BI report
+                    const iframe = document.createElement('iframe');
+                    iframe.src = powerbiUrls[containerId];
+                    iframe.width = '100%';
+                    iframe.height = '100%';
+                    iframe.style.border = 'none';
+                    iframe.allowFullscreen = true;
+                    
+                    // Append iframe to container
+                    container.appendChild(iframe);
+                    
+                    console.log(`Power BI visualization ${containerId} loaded successfully`);
+                } else {
+                    showDashboardError(container, "Visualization URL not configured for this container.");
                 }
-                
-                try {
-                    container.innerHTML = `
-                        <iframe 
-                            title="Power BI Report" 
-                            width="100%" 
-                            height="100%" 
-                            src="${embedUrl}" 
-                            frameborder="0" 
-                            allowFullScreen="true">
-                        </iframe>
-                    `;
-                } catch (err) {
-                    console.error(`Error initializing Power BI dashboard ${index + 1}:`, err);
-                    showDashboardError(container, "Could not load Power BI dashboard. Please check the embed code.");
-                }
-            });
+            } catch (error) {
+                console.error(`Error initializing Power BI visualization ${containerId}:`, error);
+                showDashboardError(container, `Error loading visualization: ${error.message}`);
+            }
         }
-        
-        // Helper function to show dashboard errors
+
+        // Show error message in dashboard container
         function showDashboardError(container, message) {
+            // Display error message in the container
             container.innerHTML = `
                 <div class="dashboard-placeholder">
                     <div class="text-center p-4">
                         <i class="fas fa-exclamation-triangle fa-3x mb-3 text-danger"></i>
                         <h5>Dashboard Error</h5>
-                        <p class="text-muted">${message}</p>
-                        <small>Update the visualization URL in the JavaScript section of index.html</small>
+                        <div class="dashboard-error">
+                            ${message}
+                        </div>
+                        <button class="btn btn-outline-secondary mt-3 retry-button">
+                            <i class="fas fa-sync-alt me-2"></i> Retry
+                        </button>
                     </div>
                 </div>
             `;
+            
+            // Add event listener to retry button
+            const retryButton = container.querySelector('.retry-button');
+            if (retryButton) {
+                retryButton.addEventListener('click', function() {
+                    if (container.classList.contains('tableau-dashboard')) {
+                        initTableauViz(container);
+                    } else if (container.classList.contains('powerbi-dashboard')) {
+                        initPowerBIViz(container);
+                    }
+                });
+            }
         }
         
-        // Initialize dashboards when the page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Tableau after the API is loaded
-            if (typeof tableau !== 'undefined') {
-                initTableau();
-            } else {
-                console.error('Tableau API not loaded');
-                // Add a slight delay to check again if the Tableau API loads
-                setTimeout(function() {
-                    if (typeof tableau !== 'undefined') {
-                        initTableau();
-                    } else {
-                        document.querySelectorAll('.tableau-dashboard').forEach(container => {
-                            showDashboardError(container, "Tableau API could not be loaded. Please check your internet connection.");
-                        });
-                    }
-                }, 2000);
-            }
+        // Load social media links from localStorage
+        function loadSocialLinks() {
+            const githubLink = localStorage.getItem('githubLink') || '#';
+            const linkedinLink = localStorage.getItem('linkedinLink') || '#';
             
-            // Initialize Power BI embeds
-            initPowerBI();
+            // Set links in footer
+            document.getElementById('githubLink').href = githubLink;
+            document.getElementById('linkedinLink').href = linkedinLink;
+            
+            // Set values in modal inputs
+            document.getElementById('githubInput').value = githubLink !== '#' ? githubLink : '';
+            document.getElementById('linkedinInput').value = linkedinLink !== '#' ? linkedinLink : ''
+        }
+        
+        // Save social media links to localStorage
+        function saveSocialLinks() {
+            const githubLink = document.getElementById('githubInput').value || '#';
+            const linkedinLink = document.getElementById('linkedinInput').value || '#';
+            
+            // Save links to localStorage
+            localStorage.setItem('githubLink', githubLink);
+            localStorage.setItem('linkedinLink', linkedinLink);
+            
+            // Update links in footer
+            document.getElementById('githubLink').href = githubLink;
+            document.getElementById('linkedinLink').href = linkedinLink;
+            
+            // Show success message
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed bottom-0 end-0 p-3';
+            toast.style.zIndex = '1070';
+            toast.innerHTML = `
+                <div class="toast show bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success text-white">
+                        <strong class="me-auto">Success</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Social links updated successfully!
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 3000);
+        }
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') !== '#' && !this.hasAttribute('data-bs-toggle')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 56, // Adjust for navbar height
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update active state in navbar
+                        document.querySelectorAll('.nav-link').forEach(navLink => {
+                            navLink.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                }
+            });
         });
+        
+        // Add active class to navbar items on scroll
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            
+            document.querySelectorAll('section').forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+        
     </script>
 </body>
 </html>
