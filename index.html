@@ -630,7 +630,7 @@
                 hideTabs: true,
                 hideToolbar: true,
                 width: '100%',
-                height: '100%'
+                height: '100%',
                 onFirstInteractive: function() {
                     console.log("Tableau visualization loaded successfully");
                 }
@@ -646,6 +646,7 @@
                         try {
                             // Use the appropriate URL based on the container ID
                             const vizUrl = container.id === 'tableauViz1' ? viz1Url : viz2Url;
+                            const vizOptions = container.id === 'tableauViz1' ? viz1Options : viz2Options;
                             new tableau.Viz(container, vizUrl, vizOptions);
                         } catch (err) {
                             console.error(`Error initializing visualization ${index + 1}:`, err);
@@ -670,10 +671,15 @@
             
             powerbiContainers.forEach((container, index) => {
                 // These are placeholders - replace with your actual Power BI embed codes
-                const embedUrl = index === 0 
-                    ? "https://app.powerbi.com/view?r=eyJrIjoiZGFjMTNhNzgtNzllYS00MjZhLThjYmEtMThlMGFhOTliMWQ3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9" 
-                    : "https://app.powerbi.com/view?r=eyJrIjoiODMyMTU0MTUtOGJmOC00M2Q2LTgyZTMtZTQ3YTAzOGYwNGY3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9";
-                    : "https://app.powerbi.com/view?r=eyJrIjoiZTA1MDkzMzEtYTA3NS00NjE0LWE5NDMtZmRmMjA4NWZhOTRmIiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9";
+                let embedUrl;
+        
+                if (container.id === 'powerbi1') {
+                    embedUrl = "https://app.powerbi.com/view?r=eyJrIjoiZGFjMTNhNzgtNzllYS00MjZhLThjYmEtMThlMGFhOTliMWQ3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9";
+                } else if (container.id === 'powerbi2') {
+                    embedUrl = "https://app.powerbi.com/view?r=eyJrIjoiODMyMTU0MTUtOGJmOC00M2Q2LTgyZTMtZTQ3YTAzOGYwNGY3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9";
+                } else if (container.id === 'powerbi3') {
+                    embedUrl = "https://app.powerbi.com/view?r=eyJrIjoiZTA1MDkzMzEtYTA3NS00NjE0LWE5NDMtZmRmMjA4NWZhOTRmIiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9";
+                }
                 
                 try {
                     container.innerHTML = `
