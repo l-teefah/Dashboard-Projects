@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization Reports Portfolio</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            padding-top: 56px;
+            background-color: #f8f9fa;
+        }
+        
+        .jumbotron {
+            background-color: #343a40;
+            color: white;
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .portfolio-item {
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .portfolio-item .card-body {
+            padding: 1.5rem;
+        }
+        
+        .dashboard-container {
+            height: 500px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .filter-button {
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .btn-filter.active {
+            background-color: #212529;
+            border-color: #212529;
+        }
+        
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .social-links a {
+            color: white;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        #portfolio-container {
+            min-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Data Visualization Reports Portfolio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="jumbotron text-center">
+        <div class="container">
+            <h1 class="display-4">Data Visualization Reports Portfolio</h1>
+            <p class="lead">Showcasing interactive dashboards created with Tableau Public and Power BI</p>
+            <a href="#portfolio" class="btn btn-light btn-lg">View My Work</a>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">My Projects</h2>
+            
+            <!-- Filter Buttons -->
+            <div class="text-center mb-4">
+                <button class="btn btn-outline-dark filter-button active" data-filter="all">All</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".tableau">Tableau</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".powerbi">Power BI</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".sales">Sales</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".marketing">Marketing</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".finance">Finance</button>
+            </div>
+            
+            <!-- Portfolio Items -->
+            <div class="row" id="portfolio-container">
+                <!-- Tableau Project 1 -->
+                <div class="col-lg-6 mix tableau sales">
+                    <div class="portfolio-item card">
+                        <div class="card-body">
+                            <h5 class="card-title">Sales Performance Dashboard</h5>
+                            <p class="card-text">Interactive sales performance visualization in US States created using Tableau Public.</p>
+                            <div class="dashboard-container tableau-dashboard" id="tableauViz1"></div>
+                            <div class="d-flex justify-content-between">
+                                <span class="badge bg-secondary">Tableau</span>
+                                <span class="badge bg-info">Sales</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tableau Project 2 -->
+                <div class="col-lg-6 mix tableau marketing">
+                    <div class="portfolio-item card">
+                        <div class="card-body">
+                            <h5 class="card-title">Covid Data Analysis</h5>
+                            <p class="card-text">Analysis of Global Cases of Covid-19.</p>
+                            <div class="dashboard-container tableau-dashboard" id="tableauViz2"></div>
+                            <div class="d-flex justify-content-between">
+                                <span class="badge bg-secondary">Tableau</span>
+                                <span class="badge bg-success">Health</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Power BI Project 1 -->
+                <div class="col-lg-6 mix powerbi finance">
+                    <div class="portfolio-item card">
+                        <div class="card-body">
+                            <h5 class="card-title">Financial Performance Dashboard</h5>
+                            <p class="card-text">Comprehensive financial metrics and KPIs built with Power BI.</p>
+                            <div class="dashboard-container powerbi-dashboard" id="powerbi1"></div>
+                            <div class="d-flex justify-content-between">
+                                <span class="badge bg-primary">Power BI</span>
+                                <span class="badge bg-warning">Finance</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Power BI Project 2 -->
+                <div class="col-lg-6 mix powerbi sales">
+                    <div class="portfolio-item card">
+                        <div class="card-body">
+                            <h5 class="card-title">Sales Territory Analysis</h5>
+                            <p class="card-text">Regional sales performance with territory mapping.</p>
+                            <div class="dashboard-container powerbi-dashboard" id="powerbi2"></div>
+                            <div class="d-flex justify-content-between">
+                                <span class="badge bg-primary">Power BI</span>
+                                <span class="badge bg-info">Sales</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="mb-4">About Me</h2>
+                    <p class="lead">I'm a data enthusiast with expertise in creating interactive dashboards using Tableau and Power BI. My focus is on telling a story with data and identifying trends and patterns from data. This portfolio showcases some of my projects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Get In Touch</h2>
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Lateefah Yusuf">
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="lateefah_yusuf@yahoo.com">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Data Visualization Reports Portfolio</h5>
+                    <p>Showcasing interactive dashboards created with Tableau Public and Power BI</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-tableau"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <small>&copy; 2025 Data Portfolio. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- MixItUp 3 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js"></script>
+    
+    <!-- Tableau API -->
+    <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Initialize MixItUp
+        var mixer = mixitup('#portfolio-container', {
+            selectors: {
+                target: '.mix'
+            },
+            animation: {
+                duration: 300
+            }
+        });
+        
+        // Toggle active class on filter buttons
+        document.querySelectorAll('.filter-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.filter-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Initialize Tableau Visualizations
+        function initTableau() {
+            // Replace these URLs with your actual Tableau Public visualization URLs
+            const viz1Url = 'https://public.tableau.com/app/profile/lateefah8519/viz/TableauDay2-3_16353302451610/Dashboard1';
+            const viz2Url = 'https://public.tableau.com/app/profile/lateefah8519/viz/CovidRecentDataDashboard/CovidRecentDataDashboard';
+            
+            const viz1Options = {
+                hideTabs: true,
+                hideToolbar: true,
+                width: '100%',
+                height: '100%'
+            };
+            
+            const viz2Options = {
+                hideTabs: true,
+                hideToolbar: true,
+                width: '100%',
+                height: '100%'
+            };
+            
+            try {
+                // Initialize first Tableau viz
+                const containerViz1 = document.getElementById('tableauViz1');
+                if (containerViz1) {
+                    new tableau.Viz(containerViz1, viz1Url, viz1Options);
+                }
+                
+                // Initialize second Tableau viz
+                const containerViz2 = document.getElementById('tableauViz2');
+                if (containerViz2) {
+                    new tableau.Viz(containerViz2, viz2Url, viz2Options);
+                }
+            } catch (e) {
+                console.error('Error initializing Tableau visualizations:', e);
+            }
+        }
+        
+        // Initialize Power BI Dashboards
+        function initPowerBI() {
+            // Add Power BI embed code here
+            // You'll need to replace these placeholders with your actual Power BI embed codes
+            const powerbi1 = document.getElementById('powerbi1');
+            const powerbi2 = document.getElementById('powerbi2');
+            const powerbi2 = document.getElementById('powerbi3');
+            
+            if (powerbi1) {
+                powerbi1.innerHTML = `
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="https://app.powerbi.com/view?r=eyJrIjoiZGFjMTNhNzgtNzllYS00MjZhLThjYmEtMThlMGFhOTliMWQ3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9" 
+                        frameborder="0" 
+                        allowFullScreen="true">
+                    </iframe>
+                `;
+            }
+            
+            if (powerbi2) {
+                powerbi2.innerHTML = `
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="https://app.powerbi.com/view?r=eyJrIjoiODMyMTU0MTUtOGJmOC00M2Q2LTgyZTMtZTQ3YTAzOGYwNGY3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9" 
+                        frameborder="0" 
+                        allowFullScreen="true">
+                    </iframe>
+                `;
+            }
+          
+          if (powerbi3) {
+                powerbi3.innerHTML = `
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="https://app.powerbi.com/view?r=eyJrIjoiZTA1MDkzMzEtYTA3NS00NjE0LWE5NDMtZmRmMjA4NWZhOTRmIiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9" 
+                        frameborder="0" 
+                        allowFullScreen="true">
+                    </iframe>
+                `;
+            }
+        }
+        
+        // Initialize dashboards when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Tableau after the API is loaded
+            if (typeof tableau !== 'undefined') {
+                initTableau();
+            } else {
+                console.error('Tableau API not loaded');
+            }
+            
+            // Initialize Power BI embeds
+            initPowerBI();
+        });
+    </script>
+</body>
+</html>
