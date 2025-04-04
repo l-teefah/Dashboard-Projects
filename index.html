@@ -168,6 +168,26 @@
             overflow: hidden;
             border: 1px solid #eee;
         }
+
+        .dashboard-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            background-color: #f8f9fa;
+            border: 1px dashed #ced4da;
+            border-radius: 8px;
+        }
+            
+        .dashboard-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
         
         .badge {
             font-weight: 500;
@@ -347,7 +367,7 @@
     <section id="home" class="jumbotron text-center">
         <div class="container">
             <h1 class="display-4">Data Visualization Reports Portfolio</h1>
-            <p class="lead">Showcasing interactive dashboards created with Tableau Public and Power BI</p>
+            <p class="lead">Showing interactive dashboards created with Tableau Public and Power BI</p>
             <a href="#portfolio" class="btn btn-light btn-lg">View My Work</a>
         </div>
     </section>
@@ -362,9 +382,10 @@
                 <button class="btn btn-outline-dark filter-button active" data-filter="all">All</button>
                 <button class="btn btn-outline-dark filter-button" data-filter=".tableau">Tableau</button>
                 <button class="btn btn-outline-dark filter-button" data-filter=".powerbi">Power BI</button>
-                <button class="btn btn-outline-dark filter-button" data-filter=".sales">Sales</button>
-                <button class="btn btn-outline-dark filter-button" data-filter=".marketing">Marketing</button>
-                <button class="btn btn-outline-dark filter-button" data-filter=".finance">Finance</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".sales & marketing">Sales & Marketing</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".service operations">Service Operations</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".health">Health</button>
+                <button class="btn btn-outline-dark filter-button" data-filter=".research & analytics">Research & Analytics</button>
             </div>
             
             <!-- Portfolio Items -->
@@ -375,10 +396,21 @@
                         <div class="card-body">
                             <h5 class="card-title">Sales Performance Dashboard</h5>
                             <p class="card-text">Interactive sales performance visualization in US States created using Tableau Public.</p>
-                            <div class="dashboard-container tableau-dashboard" id="tableauViz1"></div>
+                            <div class="dashboard-container tableau-dashboard" id="tableauViz1">
+                                <div class="dashboard-placeholder">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chart-bar fa-3x mb-3 text-secondary"></i>
+                                        <h5>Sales Performance Dashboard Preview</h5>
+                                        <p class="text-muted">Dashboard will load when connected to Tableau Public</p>
+                                        <div class="spinner-border text-secondary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-between">
                                 <span class="badge bg-secondary">Tableau</span>
-                                <span class="badge bg-info">Sales</span>
+                                <span class="badge bg-info">Sales & Marketing</span>
                             </div>
                         </div>
                     </div>
@@ -390,7 +422,18 @@
                         <div class="card-body">
                             <h5 class="card-title">Covid Data Analysis</h5>
                             <p class="card-text">Analysis of Global Cases of Covid-19.</p>
-                            <div class="dashboard-container tableau-dashboard" id="tableauViz2"></div>
+                            <div class="dashboard-container tableau-dashboard" id="tableauViz2">
+                                <div class="dashboard-placeholder">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-bullseye fa-3x mb-3 text-secondary"></i>
+                                        <h5>Covid Data Analysis Dashboard Preview</h5>
+                                        <p class="text-muted">Dashboard will load when connected to Tableau Public</p>
+                                        <div class="spinner-border text-secondary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-between">
                                 <span class="badge bg-secondary">Tableau</span>
                                 <span class="badge bg-success">Health</span>
@@ -404,8 +447,19 @@
                     <div class="portfolio-item card">
                         <div class="card-body">
                             <h5 class="card-title">Service Operations Dashboard</h5>
-                            <p class="card-text">Comprehensive metrics and KPIs of customers' complaints ticket dataset in 2024 built with Power BI. The dataset wasgenerated from Claude.</p>
-                            <div class="dashboard-container powerbi-dashboard" id="powerbi1"></div>
+                            <p class="card-text">Comprehensive metrics and KPIs of customers' complaints ticket dataset in 2024 built with Power BI. The dataset was generated from Claude.</p>
+                            <div class="dashboard-container powerbi-dashboard" id="powerbi1">
+                                <div class="dashboard-placeholder">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-dollar-sign fa-3x mb-3 text-secondary"></i>
+                                        <h5>Service Operations Dashboard Preview</h5>
+                                        <p class="text-muted">Dashboard will load when connected to Power BI</p>
+                                        <div class="spinner-border text-secondary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-between">
                                 <span class="badge bg-primary">Power BI</span>
                                 <span class="badge bg-warning">Service Operations</span>
@@ -418,9 +472,20 @@
                 <div class="col-lg-6 mix powerbi sales">
                     <div class="portfolio-item card">
                         <div class="card-body">
-                            <h5 class="card-title">Data Professional Survey Analysis</h5>
-                            <p class="card-text">Analysis of skills, salary and happiness of Data Professionals across the world. The survey Data is from a survey conducted by Alex The Analyst.</p>
-                            <div class="dashboard-container powerbi-dashboard" id="powerbi2"></div>
+                            <h5 class="card-title">Data Professionals Survey Analysis</h5>
+                            <p class="card-text">Analysis of skills, salary and happiness of Data Professionals across the world. The survey data is from a survey conducted by Alex The Analyst.</p>
+                            <div class="dashboard-container powerbi-dashboard" id="powerbi2">
+                                <div class="dashboard-placeholder">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-map-marked-alt fa-3x mb-3 text-secondary"></i>
+                                        <h5>Data Professionals Survey Analysis Dashboard Preview</h5>
+                                        <p class="text-muted">Dashboard will load when connected to Power BI</p>
+                                        <div class="spinner-border text-secondary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-between">
                                 <span class="badge bg-primary">Power BI</span>
                                 <span class="badge bg-info">Research & Analytics</span>
@@ -435,7 +500,18 @@
                         <div class="card-body">
                             <h5 class="card-title">USA Sales Data Analysis</h5>
                             <p class="card-text">Analysis of sales data from different states in the US.</p>
-                            <div class="dashboard-container powerbi-dashboard" id="powerbi2"></div>
+                            <div class="dashboard-container powerbi-dashboard" id="powerbi3">
+                                <div class="dashboard-placeholder">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-map-marked-alt fa-3x mb-3 text-secondary"></i>
+                                        <h5>USA Sales Data Analysis Dashboard Preview</h5>
+                                        <p class="text-muted">Dashboard will load when connected to Power BI</p>
+                                        <div class="spinner-border text-secondary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-between">
                                 <span class="badge bg-primary">Power BI</span>
                                 <span class="badge bg-info">Sales & Marketing</span>
@@ -467,10 +543,10 @@
                 <div class="col-lg-6 mx-auto">
                     <form>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Lateefah Yusuf">
+                            <input type="text" class="form-control" placeholder="Your Name">
                         </div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" placeholder="lateefah_yusuf@yahoo.com">
+                            <input type="email" class="form-control" placeholder="Your Email">
                         </div>
                         <div class="mb-3">
                             <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
@@ -499,7 +575,7 @@
                     </div>
                 </div>
             </div>
-            <hr class="my-4">
+            <hr class="footer-divider">
             <div class="text-center">
                 <small>&copy; 2025 Data Portfolio. All rights reserved.</small>
             </div>
@@ -555,68 +631,80 @@
                 hideToolbar: true,
                 width: '100%',
                 height: '100%'
+                onFirstInteractive: function() {
+                    console.log("Tableau visualization loaded successfully");
+                }
             };
             
             try {
-                // Initialize first Tableau viz
-                const containerViz1 = document.getElementById('tableauViz1');
-                if (containerViz1) {
-                    new tableau.Viz(containerViz1, viz1Url, viz1Options);
-                }
-                
-                // Initialize second Tableau viz
-                const containerViz2 = document.getElementById('tableauViz2');
-                if (containerViz2) {
-                    new tableau.Viz(containerViz2, viz2Url, viz2Options);
+                // Check if Tableau API is available
+                if (typeof tableau !== 'undefined') {
+                    // Initialize visualizations
+                    const containers = document.querySelectorAll('.tableau-dashboard');
+                    
+                    containers.forEach((container, index) => {
+                        try {
+                            // Use the appropriate URL based on the container ID
+                            const vizUrl = container.id === 'tableauViz1' ? viz1Url : viz2Url;
+                            new tableau.Viz(container, vizUrl, vizOptions);
+                        } catch (err) {
+                            console.error(`Error initializing visualization ${index + 1}:`, err);
+                            showDashboardError(container, "Could not load Tableau visualization. Please check the URL.");
+                        }
+                    });
+                } else {
+                    console.error('Tableau API not loaded');
+                    document.querySelectorAll('.tableau-dashboard').forEach(container => {
+                        showDashboardError(container, "Tableau API not loaded. Please check your internet connection.");
+                    });
                 }
             } catch (e) {
-                console.error('Error initializing Tableau visualizations:', e);
+                console.error('Error in Tableau initialization:', e);
             }
         }
         
         // Initialize Power BI Dashboards
         function initPowerBI() {
             // Add Power BI embed code here
-            // You'll need to replace these placeholders with your actual Power BI embed codes
-            const powerbi1 = document.getElementById('powerbi1');
-            const powerbi2 = document.getElementById('powerbi2');
-            const powerbi2 = document.getElementById('powerbi3');
+            const powerbiContainers = document.querySelectorAll('.powerbi-dashboard');
             
-            if (powerbi1) {
-                powerbi1.innerHTML = `
-                    <iframe 
-                        width="100%" 
-                        height="100%" 
-                        src="https://app.powerbi.com/view?r=eyJrIjoiZGFjMTNhNzgtNzllYS00MjZhLThjYmEtMThlMGFhOTliMWQ3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9" 
-                        frameborder="0" 
-                        allowFullScreen="true">
-                    </iframe>
-                `;
-            }
-            
-            if (powerbi2) {
-                powerbi2.innerHTML = `
-                    <iframe 
-                        width="100%" 
-                        height="100%" 
-                        src="https://app.powerbi.com/view?r=eyJrIjoiODMyMTU0MTUtOGJmOC00M2Q2LTgyZTMtZTQ3YTAzOGYwNGY3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9" 
-                        frameborder="0" 
-                        allowFullScreen="true">
-                    </iframe>
-                `;
-            }
-          
-          if (powerbi3) {
-                powerbi3.innerHTML = `
-                    <iframe 
-                        width="100%" 
-                        height="100%" 
-                        src="https://app.powerbi.com/view?r=eyJrIjoiZTA1MDkzMzEtYTA3NS00NjE0LWE5NDMtZmRmMjA4NWZhOTRmIiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9" 
-                        frameborder="0" 
-                        allowFullScreen="true">
-                    </iframe>
-                `;
-            }
+            powerbiContainers.forEach((container, index) => {
+                // These are placeholders - replace with your actual Power BI embed codes
+                const embedUrl = index === 0 
+                    ? "https://app.powerbi.com/view?r=eyJrIjoiZGFjMTNhNzgtNzllYS00MjZhLThjYmEtMThlMGFhOTliMWQ3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9" 
+                    : "https://app.powerbi.com/view?r=eyJrIjoiODMyMTU0MTUtOGJmOC00M2Q2LTgyZTMtZTQ3YTAzOGYwNGY3IiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9";
+                    : "https://app.powerbi.com/view?r=eyJrIjoiZTA1MDkzMzEtYTA3NS00NjE0LWE5NDMtZmRmMjA4NWZhOTRmIiwidCI6ImY0MGI0YTY4LWQ1NWEtNDA0My05MzE3LTZiYTQ4NTM2NDRkNiJ9;
+                
+                try {
+                    container.innerHTML = `
+                        <iframe 
+                            title="Power BI Report" 
+                            width="100%" 
+                            height="100%" 
+                            src="${embedUrl}" 
+                            frameborder="0" 
+                            allowFullScreen="true">
+                        </iframe>
+                    `;
+                } catch (err) {
+                    console.error(`Error initializing Power BI dashboard ${index + 1}:`, err);
+                    showDashboardError(container, "Could not load Power BI dashboard. Please check the embed code.");
+                }
+            });
+        }
+        
+        // Helper function to show dashboard errors
+        function showDashboardError(container, message) {
+            container.innerHTML = `
+                <div class="dashboard-placeholder">
+                    <div class="text-center p-4">
+                        <i class="fas fa-exclamation-triangle fa-3x mb-3 text-danger"></i>
+                        <h5>Dashboard Error</h5>
+                        <p class="text-muted">${message}</p>
+                        <small>Update the visualization URL in the JavaScript section of index.html</small>
+                    </div>
+                </div>
+            `;
         }
         
         // Initialize dashboards when the page loads
@@ -626,6 +714,16 @@
                 initTableau();
             } else {
                 console.error('Tableau API not loaded');
+                // Add a slight delay to check again if the Tableau API loads
+                setTimeout(function() {
+                    if (typeof tableau !== 'undefined') {
+                        initTableau();
+                    } else {
+                        document.querySelectorAll('.tableau-dashboard').forEach(container => {
+                            showDashboardError(container, "Tableau API could not be loaded. Please check your internet connection.");
+                        });
+                    }
+                }, 2000);
             }
             
             // Initialize Power BI embeds
