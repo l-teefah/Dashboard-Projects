@@ -14,64 +14,305 @@
     <style>
         body {
             padding-top: 56px;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
             background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
         }
         
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        /* Navbar styling */
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            margin: 0 5px;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 80%;
+        }
+        
+        /* Hero section styling */
         .jumbotron {
-            background-color: #343a40;
+            background: linear-gradient(135deg, #343a40 0%, #121416 100%);
             color: white;
-            padding: 4rem 2rem;
-            margin-bottom: 2rem;
+            padding: 6rem 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
         }
         
+        .jumbotron::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,100 100,0 100,100" style="fill:rgba(255,255,255,0.03)"/></svg>');
+            background-size: cover;
+        }
+        
+        .jumbotron .btn {
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .jumbotron .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Section styling */
+        section {
+            padding: 5rem 0;
+        }
+        
+        section h2 {
+            font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        section h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            height: 3px;
+            width: 60px;
+            background: #343a40;
+        }
+        
+        .text-center h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Portfolio item styling */
         .portfolio-item {
             margin-bottom: 30px;
-            transition: all 0.3s ease;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #fff;
         }
         
         .portfolio-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
         
         .portfolio-item .card-body {
-            padding: 1.5rem;
+            padding: 1.8rem;
+        }
+        
+        .portfolio-item .card-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #343a40;
         }
         
         .dashboard-container {
             height: 500px;
             width: 100%;
             margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+        
+        .badge {
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 30px;
+        }
+        
+        /* Filter buttons */
+        .filter-buttons-container {
+            margin-bottom: 30px;
         }
         
         .filter-button {
-            margin-right: 5px;
+            margin-right: 8px;
             margin-bottom: 10px;
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            border: 2px solid #343a40;
+        }
+        
+        .filter-button:hover {
+            background-color: rgba(33, 37, 41, 0.1);
         }
         
         .btn-filter.active {
-            background-color: #212529;
-            border-color: #212529;
-        }
-        
-        .footer {
             background-color: #343a40;
             color: white;
-            padding: 2rem 0;
-            margin-top: 2rem;
+        }
+        
+        /* About section */
+        .about-section {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            position: relative;
+        }
+        
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #343a40, transparent);
+        }
+        
+        /* Contact form */
+        .form-control {
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #343a40;
+            box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.25);
+        }
+        
+        .btn-dark {
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-dark:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer styling */
+        .footer {
+            background: linear-gradient(135deg, #343a40 0%, #212529 100%);
+            color: #f8f9fa;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer h5 {
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
         }
         
         .social-links a {
-            color: white;
-            margin-right: 15px;
-            font-size: 1.2rem;
+            color: #f8f9fa;
+            margin-right: 18px;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
         
-        #portfolio-container {
-            min-height: 400px;
+        .social-links a:hover {
+            color: #fff;
+            transform: translateY(-3px);
+            text-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        hr.footer-divider {
+            border-color: rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+        }
+        
+        /* Animation for portfolio items */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .mix {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .jumbotron {
+                padding: 4rem 1rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            .portfolio-item {
+                margin-bottom: 20px;
+            }
+            
+            .dashboard-container {
+                height: 400px;
+            }
+            
+            .social-links a {
+                margin-right: 12px;
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -162,12 +403,12 @@
                 <div class="col-lg-6 mix powerbi finance">
                     <div class="portfolio-item card">
                         <div class="card-body">
-                            <h5 class="card-title">Financial Performance Dashboard</h5>
-                            <p class="card-text">Comprehensive financial metrics and KPIs built with Power BI.</p>
+                            <h5 class="card-title">Service Operations Dashboard</h5>
+                            <p class="card-text">Comprehensive metrics and KPIs of customers' complaints ticket dataset in 2024 built with Power BI. The dataset wasgenerated from Claude.</p>
                             <div class="dashboard-container powerbi-dashboard" id="powerbi1"></div>
                             <div class="d-flex justify-content-between">
                                 <span class="badge bg-primary">Power BI</span>
-                                <span class="badge bg-warning">Finance</span>
+                                <span class="badge bg-warning">Service Operations</span>
                             </div>
                         </div>
                     </div>
@@ -177,12 +418,27 @@
                 <div class="col-lg-6 mix powerbi sales">
                     <div class="portfolio-item card">
                         <div class="card-body">
-                            <h5 class="card-title">Sales Territory Analysis</h5>
-                            <p class="card-text">Regional sales performance with territory mapping.</p>
+                            <h5 class="card-title">Data Professional Survey Analysis</h5>
+                            <p class="card-text">Analysis of skills, salary and happiness of Data Professionals across the world. The survey Data is from a survey conducted by Alex The Analyst.</p>
                             <div class="dashboard-container powerbi-dashboard" id="powerbi2"></div>
                             <div class="d-flex justify-content-between">
                                 <span class="badge bg-primary">Power BI</span>
-                                <span class="badge bg-info">Sales</span>
+                                <span class="badge bg-info">Research & Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Power BI Project 3 -->
+                <div class="col-lg-6 mix powerbi sales">
+                    <div class="portfolio-item card">
+                        <div class="card-body">
+                            <h5 class="card-title">USA Sales Data Analysis</h5>
+                            <p class="card-text">Analysis of sales data from different states in the US.</p>
+                            <div class="dashboard-container powerbi-dashboard" id="powerbi2"></div>
+                            <div class="d-flex justify-content-between">
+                                <span class="badge bg-primary">Power BI</span>
+                                <span class="badge bg-info">Sales & Marketing</span>
                             </div>
                         </div>
                     </div>
